@@ -32,7 +32,7 @@ const Router = express.Router();
 
 Router.post("/create", upload, auth, Controller.CreateBlog);
 Router.put("/delete", auth, Controller.DeleteBlog);
-Router.get("/get/:id", auth, Controller.GetBlogById);
-Router.post("/list", auth, Controller.ListBlogs);
+Router.get("/get/:id", Controller.GetBlogById);
+Router.post("/list", Controller.ListBlogs);
 
 export default Router;

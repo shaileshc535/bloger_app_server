@@ -89,7 +89,7 @@ const CreateBlog = async (req, res: Response) => {
 
 const ListBlogs = async (req, res: Response) => {
   try {
-    const user = JSON.parse(JSON.stringify(req.user));
+    // const user = JSON.parse(JSON.stringify(req.user));
 
     let { page, limit, sort, cond, paginate } = req.body;
 
@@ -120,7 +120,6 @@ const ListBlogs = async (req, res: Response) => {
         $match: {
           isdeleted: false,
           isactive: true,
-          blog_owner: ObjectId(user._id),
           $and: [
             cond,
             {
