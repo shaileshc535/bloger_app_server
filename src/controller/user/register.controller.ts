@@ -110,6 +110,8 @@ const register = async (req, res) => {
       },
     });
   } catch (error) {
+    console.log(error);
+
     res.status(400).json({
       status: 400,
       type: "error",
