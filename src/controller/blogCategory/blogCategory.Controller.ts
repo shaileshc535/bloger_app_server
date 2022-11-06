@@ -54,13 +54,10 @@ const CreateBlogCategory = async (req, res: Response) => {
 
 const ListBlogCategory = async (req, res: Response) => {
   try {
-    let { page, limit, sort, cond, paginate } = req.body;
+    let { page, limit, sort, cond } = req.body;
 
     let search = "";
 
-    if (paginate == undefined) {
-      paginate = true;
-    }
     if (!page || page < 1) {
       page = 1;
     }

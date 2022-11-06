@@ -89,15 +89,10 @@ const CreateBlog = async (req, res: Response) => {
 
 const ListBlogs = async (req, res: Response) => {
   try {
-    // const user = JSON.parse(JSON.stringify(req.user));
-
-    let { page, limit, sort, cond, paginate } = req.body;
+    let { page, limit, sort, cond } = req.body;
 
     let search = "";
 
-    if (paginate == undefined) {
-      paginate = true;
-    }
     if (!page || page < 1) {
       page = 1;
     }
@@ -113,6 +108,10 @@ const ListBlogs = async (req, res: Response) => {
     if (typeof cond.search != "undefined" && cond.search != null) {
       search = String(cond.search);
       delete cond.search;
+    }
+    if (typeof cond.category != "undefined" && cond.category != null) {
+      search = String(cond.category);
+      delete cond.category;
     }
 
     cond = [
@@ -224,6 +223,42 @@ const GetBlogById = async (req, res: Response) => {
   }
 };
 
+const GetBlogByCategoryId = async (req, res: Response) => {
+  try {
+    // const user = JSON.parse(JSON.stringify(req.user));
+    const id = req.params.id;
+
+    const result = await BlogModel.find({
+      blog_category: id,
+      isdeleted: false,
+      isactive: true,
+    })
+      .populate("blog_owner")
+      .populate("blog_category");
+
+    if (result.length < 1) {
+      return res.status(400).json({
+        type: "error",
+        status: 400,
+        message: "Blog not found",
+      });
+    }
+
+    return res.status(200).json({
+      status: 200,
+      type: "success",
+      message: "Blogs Fetched Successfully",
+      data: result,
+    });
+  } catch (error) {
+    return res.status(404).json({
+      type: "error",
+      status: 404,
+      message: error.message,
+    });
+  }
+};
+
 const DeleteBlog = async (req, res: Response) => {
   try {
     const { id } = req.body;
@@ -275,4 +310,5 @@ export default {
   ListBlogs,
   GetBlogById,
   DeleteBlog,
+  GetBlogByCategoryId,
 };

@@ -33,6 +33,7 @@ const Router = express.Router();
 Router.post("/create", upload, auth, Controller.CreateBlog);
 Router.put("/delete", auth, Controller.DeleteBlog);
 Router.get("/get/:id", Controller.GetBlogById);
+Router.get("/category/:id", Controller.GetBlogByCategoryId);
 Router.post("/list", Controller.ListBlogs);
 
 export default Router;

@@ -6,6 +6,6 @@ const Router = express.Router();
 
 Router.post("/create", auth, Controller.CreateBlogCategory);
 Router.put("/delete", auth, Controller.DeleteBlogCategory);
-Router.post("/list", auth, Controller.ListBlogCategory);
+Router.post("/list", Controller.ListBlogCategory);
 
 export default Router;
